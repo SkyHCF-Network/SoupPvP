@@ -1,6 +1,6 @@
 name: SoupPvP
 main: net.skyhcf.souppvp.SoupPvP
-depend: [qLib, WorldGuard]
+depend: [qLib]
 author: Atmosphere Games
 version: 1.0.0
 website: https://atmospheregames.club

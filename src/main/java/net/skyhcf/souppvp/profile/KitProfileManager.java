@@ -5,6 +5,7 @@ import net.skyhcf.souppvp.SoupPvP;
 import net.skyhcf.souppvp.kit.Kit;
 import net.skyhcf.souppvp.utils.MiscUtils;
 import org.bson.Document;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -32,6 +33,13 @@ public class KitProfileManager {
     }
 
     public KitProfile get(Player player){
+        for(KitProfile kitProfile : profiles){
+            if(kitProfile.getUuid().toString().equalsIgnoreCase(player.getUniqueId().toString())) return kitProfile;
+        }
+        return null;
+    }
+
+    public KitProfile get(OfflinePlayer player){
         for(KitProfile kitProfile : profiles){
             if(kitProfile.getUuid().toString().equalsIgnoreCase(player.getUniqueId().toString())) return kitProfile;
         }

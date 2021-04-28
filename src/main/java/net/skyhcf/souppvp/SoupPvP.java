@@ -6,11 +6,15 @@ import net.frozenorb.qlib.scoreboard.FrozenScoreboardHandler;
 import net.skyhcf.souppvp.commands.parameter.KitParameterType;
 import net.skyhcf.souppvp.database.MongoManager;
 import net.skyhcf.souppvp.event.listeners.GeneralListener;
+import net.skyhcf.souppvp.killstreak.KillstreakManager;
 import net.skyhcf.souppvp.kit.Kit;
 import net.skyhcf.souppvp.kit.KitManager;
 import net.skyhcf.souppvp.profile.KitProfileManager;
 import net.skyhcf.souppvp.scoreboard.SoupScoreConfig;
 import net.skyhcf.souppvp.utils.Cooldowns;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class SoupPvP extends JavaPlugin {
@@ -20,6 +24,7 @@ public class SoupPvP extends JavaPlugin {
     @Getter private MongoManager mongoManager;
     @Getter private KitProfileManager kitProfileManager;
     @Getter private KitManager kitManager;
+    @Getter private KillstreakManager killstreakManager;
 
     @Override
     public void onEnable() {
@@ -31,6 +36,7 @@ public class SoupPvP extends JavaPlugin {
 
         this.kitProfileManager = new KitProfileManager();
         this.kitManager = new KitManager();
+        this.killstreakManager = new KillstreakManager();
 
         FrozenScoreboardHandler.setConfiguration(SoupScoreConfig.create());
         FrozenCommandHandler.registerAll(this);
@@ -41,6 +47,14 @@ public class SoupPvP extends JavaPlugin {
 
         createCooldowns();
 
+    }
+
+    @Override
+    public void onDisable() {
+        for(Block block : GeneralListener.blocksToRemove){
+            block.setType(Material.AIR);
+            block.getWorld().save();
+        }
     }
 
     private void createCooldowns(){

@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import lombok.Getter;
 import net.frozenorb.qlib.util.ItemBuilder;
 import net.skyhcf.atmosphere.shared.chat.BukkitChat;
+import net.skyhcf.souppvp.kit.impl.FishermanKit;
 import net.skyhcf.souppvp.kit.impl.PvPKit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -16,6 +17,7 @@ public class KitManager {
 
     public KitManager(){
         kits.add(new PvPKit());
+        kits.add(new FishermanKit());
     }
 
     public void equip(Player player, Kit kit){
