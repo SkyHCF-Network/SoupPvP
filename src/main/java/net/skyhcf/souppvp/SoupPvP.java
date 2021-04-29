@@ -13,9 +13,11 @@ import net.skyhcf.souppvp.profile.KitProfileManager;
 import net.skyhcf.souppvp.scoreboard.SoupScoreConfig;
 import net.skyhcf.souppvp.utils.Cooldowns;
 import org.bukkit.Bukkit;
+import net.skyhcf.souppvp.tab.TabHandler;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.plugin.java.JavaPlugin;
+import net.frozenorb.qlib.tab.FrozenTabHandler;
 
 public class SoupPvP extends JavaPlugin {
 
@@ -61,5 +63,8 @@ public class SoupPvP extends JavaPlugin {
         Cooldowns.createCooldown("combat");
         Cooldowns.createCooldown("golden_apple");
         Cooldowns.createCooldown("enderpearl");
+        Cooldowns.createCooldown("launchpad");
+
+        FrozenTabHandler.setLayoutProvider(new TabHandler());
     }
 }

@@ -15,6 +15,7 @@ import net.skyhcf.souppvp.kit.Kit;
 import net.skyhcf.souppvp.profile.KitProfile;
 import net.skyhcf.souppvp.utils.Cooldowns;
 import net.skyhcf.souppvp.utils.MiscUtils;
+import net.skyhcf.souppvp.utils.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -35,7 +36,9 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class GeneralListener implements Listener {
 
@@ -140,9 +143,15 @@ public class GeneralListener implements Listener {
     public void playerMove(PlayerMoveEvent e){
         if(e.getPlayer().getLocation().clone().subtract(0, 2, 0).getBlock().getType().name().contains("PISTON") && e.getPlayer().getLocation().clone().subtract(0, 1, 0).getBlock().getType() == Material.GOLD_BLOCK){
             //Sulfur.instance.getPlayerDataManager().getPlayerData(e.getPlayer()).setExempt(true);
+            if(Cooldowns.isOnCooldown("launchpad", e.getPlayer().getUniqueId())) {
+                e.getPlayer().sendMessage(Util.color("&cYou are on cooldown for &c&l" + ScoreFunction.TIME_FANCY.apply(Cooldowns.getCooldownForPlayerLong("launchpad", e.getPlayer()) / 1000.0f)));
+                return;
+            }
             e.getPlayer().setVelocity(e.getPlayer().getLocation().getDirection().multiply(1.5).add(new Vector(0, 0.92, 0)));
             e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.CHICKEN_EGG_POP, 1.0F, 1.0F);
+            Cooldowns.addCooldown("launchpad", e.getPlayer(), 30);
             Bukkit.getServer().getPluginManager().callEvent(new PlayerLaunchPadEvent(e.getPlayer(), e.getPlayer().getLocation()));
+            if (Arrays.stream(e.getPlayer().getInventory().getContents()).filter(is -> is != null && !is.getType().equals(Material.AIR)).count() == 0) Bukkit.getServer().dispatchCommand(e.getPlayer(), "kit pvp");
 /*            (new BukkitRunnable() {
                 @Override
                 public void run() {
