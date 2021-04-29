@@ -18,7 +18,7 @@ public class TabHandler implements LayoutProvider {
         tabLayout.set(0, 4, "&fKills: &b" + (SoupPvP.getInstance().getKitProfileManager().get(player).getKills()));
         tabLayout.set(0, 5, "&fKillstreak: &b" + (SoupPvP.getInstance().getKitProfileManager().get(player).getKillstreak()));
         tabLayout.set(0, 6, "&fDeaths: &b" + (SoupPvP.getInstance().getKitProfileManager().get(player).getDeaths()));
-        tabLayout.set(0, 7, "&fBalance: &b" + (SoupPvP.getInstance().getKitProfileManager().get(player).getBalance()));
+        tabLayout.set(0, 7, "&fBalance: &b$" + (SoupPvP.getInstance().getKitProfileManager().get(player).getBalance()));
 
 
         return tabLayout;
